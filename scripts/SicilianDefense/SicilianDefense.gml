@@ -254,12 +254,12 @@ function SicilianDefense() {
 		{
 			ds_list_add(oGame.formattedHistory,"O-O");
 			show_debug_message("0-0");
-			board_object.grid[4, 0] = [0, 0];
-			board_object.grid[7, 0] = [0, 0];
-			board_object.grid[6, 0] = [KING, BLACK];
-			board_object.grid[5, 0] = [ROOK, BLACK];
-			board_object.NorthCanCastleLeft = false;
-			board_object.NorthCanCastleRight = false;
+			oBoard.grid[4, 0] = [0, 0];
+			oBoard.grid[7, 0] = [0, 0];
+			oBoard.grid[6, 0] = [KING, BLACK];
+			oBoard.grid[5, 0] = [ROOK, BLACK];
+			oBoard.NorthCanCastleLeft = false;
+			oBoard.NorthCanCastleRight = false;
 			oGame.turn += 1;
 			oGame.state = "Player Turn";
 			oGame.AIOpening = false;
@@ -277,12 +277,12 @@ function SicilianDefense() {
 		{
 			ds_list_add(oGame.formattedHistory,"O-O");
 			show_debug_message("0-0");
-			board_object.grid[4, 0] = [0, 0];
-			board_object.grid[7, 0] = [0, 0];
-			board_object.grid[6, 0] = [KING, BLACK];
-			board_object.grid[5, 0] = [ROOK, BLACK];
-			board_object.NorthCanCastleLeft = false;
-			board_object.NorthCanCastleRight = false;
+			oBoard.grid[4, 0] = [0, 0];
+			oBoard.grid[7, 0] = [0, 0];
+			oBoard.grid[6, 0] = [KING, BLACK];
+			oBoard.grid[5, 0] = [ROOK, BLACK];
+			oBoard.NorthCanCastleLeft = false;
+			oBoard.NorthCanCastleRight = false;
 			oGame.turn += 1;
 			oGame.state = "Player Turn";
 			oGame.AIOpening = false;

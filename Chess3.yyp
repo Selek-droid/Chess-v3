@@ -31,7 +31,7 @@
     {"id":{"name":"Minimize","path":"scripts/Minimize/Minimize.yy",},"order":11,},
     {"id":{"name":"Maximize","path":"scripts/Maximize/Maximize.yy",},"order":12,},
     {"id":{"name":"oGame","path":"objects/oGame/oGame.yy",},"order":0,},
-    {"id":{"name":"board_object","path":"objects/board_object/board_object.yy",},"order":1,},
+    {"id":{"name":"oBoard","path":"objects/oBoard/oBoard.yy",},"order":1,},
     {"id":{"name":"start_menu","path":"objects/start_menu/start_menu.yy",},"order":2,},
     {"id":{"name":"StartScreen","path":"rooms/StartScreen/StartScreen.yy",},"order":0,},
     {"id":{"name":"Chessboard","path":"rooms/Chessboard/Chessboard.yy",},"order":1,},

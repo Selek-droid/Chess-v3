@@ -3,7 +3,7 @@ function Minimize(argument0, argument1, argument2, argument3) {
 	var moversSeat = argument1;  // in any human game, this will be NORTH. We flip to south below.
 	var moversColor = argument2;
 	var searchDepth = argument3;  // ok to use local var?
-	var HermioneColor = board_object.GrangerColor;
+	var HermioneColor = oBoard.GrangerColor;
 
 	var possibleMoves = ds_list_create();
 	var listSize = (ds_list_size(possibleMoves)) - 4;
@@ -61,36 +61,36 @@ function Minimize(argument0, argument1, argument2, argument3) {
 						case PAWN: 
 						{
 							// if moversSeat == NORTH
-							positionScore += (VPAWN + board_object.AIpawnTable[xx, yy]);
-							// else positionScore +=(VPAWN + board_object.HumanPawnTable[xx, yy]); 
+							positionScore += (VPAWN + oBoard.AIpawnTable[xx, yy]);
+							// else positionScore +=(VPAWN + oBoard.HumanPawnTable[xx, yy]); 
 							break;
 						}
 						case KNIGHT:
 						{
 							// if moversSeat == NORTH
-							positionScore += (VKNIGHT + board_object.AIKnightTable[xx, yy]);
-							// else positionScore += (VKNIGHT + board_object.HumanKnightTable[xx, yy]);
+							positionScore += (VKNIGHT + oBoard.AIKnightTable[xx, yy]);
+							// else positionScore += (VKNIGHT + oBoard.HumanKnightTable[xx, yy]);
 							break;
 						}
 						case BISHOP:
 						{
 							//  if moversSeat == NORTH
-							positionScore += (VBISHOP + board_object.AIBishopTable[xx, yy]);
-							// else positionScore += (VBISHOP + board_object.HumanBishopTable[xx, yy]);
+							positionScore += (VBISHOP + oBoard.AIBishopTable[xx, yy]);
+							// else positionScore += (VBISHOP + oBoard.HumanBishopTable[xx, yy]);
 							break;
 						}
 						case ROOK:
 						{
 							// if moversSeat == NORTH
-							positionScore += (VROOK + board_object.AIRookTable[xx, yy]);
-							// else positionScore += (VROOK + board_object.HumanRookTable[xx, yy]);
+							positionScore += (VROOK + oBoard.AIRookTable[xx, yy]);
+							// else positionScore += (VROOK + oBoard.HumanRookTable[xx, yy]);
 							break;
 						}
 						case QUEEN:
 						{
 							// if moversSeat == NORTH
-							positionScore += (VQUEEN + board_object.AIQueenTable[xx, yy]);
-							// else positionScore += (VQUEEN + board_object.HumanQueenTable[xx, yy]);
+							positionScore += (VQUEEN + oBoard.AIQueenTable[xx, yy]);
+							// else positionScore += (VQUEEN + oBoard.HumanQueenTable[xx, yy]);
 							break;
 						}
 						case KING:
@@ -106,8 +106,8 @@ function Minimize(argument0, argument1, argument2, argument3) {
 							//}
 						
 							// if moversSeat == NORTH
-							positionScore += (VKING + board_object.AIKingTable[xx, yy]);
-							// else positionScore += (VKING + board_object.HumanKingTable[xx, yy]);
+							positionScore += (VKING + oBoard.AIKingTable[xx, yy]);
+							// else positionScore += (VKING + oBoard.HumanKingTable[xx, yy]);
 							break;
 						}
 					}
@@ -120,43 +120,43 @@ function Minimize(argument0, argument1, argument2, argument3) {
 						case PAWN: 
 						{
 							// if moversSeat == NORTH
-							positionScore -= (VPAWN + board_object.HumanPawnTable[xx, yy]);
-							// else positionScore -= (VPAWN + board_object.AIpawnTable[xx, yy]);
+							positionScore -= (VPAWN + oBoard.HumanPawnTable[xx, yy]);
+							// else positionScore -= (VPAWN + oBoard.AIpawnTable[xx, yy]);
 							break;
 						}
 						case KNIGHT:
 						{
 							// if moversSeat == NORTH
-							positionScore -= (VKNIGHT + board_object.HumanKnightTable[xx, yy]);
-							// else positionScore -= (VKNIGHT + board_object.AIKnightTable[xx, yy]);
+							positionScore -= (VKNIGHT + oBoard.HumanKnightTable[xx, yy]);
+							// else positionScore -= (VKNIGHT + oBoard.AIKnightTable[xx, yy]);
 							break;
 						}
 						case BISHOP:
 						{
 							// if moversSeat == NORTH
-							positionScore -= (VBISHOP + board_object.HumanBishopTable[xx, yy]);
-							// else positionScore -= (VBISHOP + board_object.AIBishopTable[xx, yy]);
+							positionScore -= (VBISHOP + oBoard.HumanBishopTable[xx, yy]);
+							// else positionScore -= (VBISHOP + oBoard.AIBishopTable[xx, yy]);
 							break;
 						}
 						case ROOK:
 						{
 							// if moversSeat == NORTH
-							positionScore -= (VROOK + board_object.HumanRookTable[xx, yy]);
-							// else positionScore -= (VROOK + board_object.AIRookTable[xx, yy]);;
+							positionScore -= (VROOK + oBoard.HumanRookTable[xx, yy]);
+							// else positionScore -= (VROOK + oBoard.AIRookTable[xx, yy]);;
 							break;
 						}
 						case QUEEN:
 						{
 							// if moversSeat == NORTH
-							positionScore -= (VQUEEN + board_object.HumanQueenTable[xx, yy]);
-							// else positionScore -= (VQUEEN + board_object.AIQueenTable[xx, yy]);
+							positionScore -= (VQUEEN + oBoard.HumanQueenTable[xx, yy]);
+							// else positionScore -= (VQUEEN + oBoard.AIQueenTable[xx, yy]);
 							break;
 						}
 						case KING:
 						{
 							// if moversSeat == NORTH
-							positionScore -= (VKING + board_object.HumanKingTable[xx, yy]);
-							// else positionScore -= (VKING + board_object.AIKingTable[xx, yy]);
+							positionScore -= (VKING + oBoard.HumanKingTable[xx, yy]);
+							// else positionScore -= (VKING + oBoard.AIKingTable[xx, yy]);
 							break;
 						}
 					}

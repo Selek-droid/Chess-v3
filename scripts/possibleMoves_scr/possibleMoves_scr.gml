@@ -200,7 +200,7 @@ function possibleMoves_scr(argument0, argument1, argument2, argument3, argument4
 					{
 						if (AIColor == BLACK)
 						{
-							if (board_object.NorthCanCastleRight) && (xx == 4) // where to store this during minmax?
+							if (oBoard.NorthCanCastleRight) && (xx == 4) // where to store this during minmax?
 							{
 								var castleTarget = boardState[6, yy];  // Castling Kingside, to Right
 								var targetID = boardState[5, yy];
@@ -211,7 +211,7 @@ function possibleMoves_scr(argument0, argument1, argument2, argument3, argument4
 									ds_list_add(legalMoves, xx, yy, 6, yy);  
 							}
 				
-							if (board_object.NorthCanCastleLeft) && (xx == 4) // castling Queenside, to Left
+							if (oBoard.NorthCanCastleLeft) && (xx == 4) // castling Queenside, to Left
 							{
 								var knightThere = boardState[xx - 3, yy];
 								var castleTarget = boardState[xx - 2, yy];  
@@ -226,7 +226,7 @@ function possibleMoves_scr(argument0, argument1, argument2, argument3, argument4
 				
 						if (AIColor == WHITE)  //  AI is playing white pieces on north side
 						{
-							if (board_object.NorthCanCastleLeft) && (xx == 3) // Castle Kingside, to Left
+							if (oBoard.NorthCanCastleLeft) && (xx == 3) // Castle Kingside, to Left
 							{
 								var castleTarget = boardState[1, yy];  
 								var targetID = boardState[2, yy];
@@ -239,7 +239,7 @@ function possibleMoves_scr(argument0, argument1, argument2, argument3, argument4
 									}
 							}
 				
-							if (board_object.NorthCanCastleRight) && (xx == 3) // Castle Queenside, to Right
+							if (oBoard.NorthCanCastleRight) && (xx == 3) // Castle Queenside, to Right
 							{
 								var knightThere = boardState[xx + 3, yy];
 								var castleTarget = boardState[xx + 2, yy];  
@@ -459,7 +459,7 @@ function possibleMoves_scr(argument0, argument1, argument2, argument3, argument4
 					{
 						if (AIColor == BLACK)
 						{
-							if (board_object.SouthCanCastleLeft) && (xx == 3) // Kingside, to left
+							if (oBoard.SouthCanCastleLeft) && (xx == 3) // Kingside, to left
 							{
 								var castleTarget = boardState[1, yy];  
 								var targetID = boardState[2, yy];
@@ -470,7 +470,7 @@ function possibleMoves_scr(argument0, argument1, argument2, argument3, argument4
 									ds_list_add(legalMoves, 3, yy, 1, yy);  
 							}
 				
-							if (board_object.SouthCanCastleRight) && (xx == 3) // Queenside, to right
+							if (oBoard.SouthCanCastleRight) && (xx == 3) // Queenside, to right
 							{
 								var knightThere = boardState[6, yy];
 								var castleTarget = boardState[5, yy];  // offset 2, 0

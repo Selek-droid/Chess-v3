@@ -7,7 +7,7 @@ turn = 1;
 depthOfSearch = 1;
 testDepth = 2;
 
-if global.HermioneColor == BLACK
+if global.HermioneColor == BLACKSIDE
 {
 notationX[7] = "h";
 notationX[6] = "g";

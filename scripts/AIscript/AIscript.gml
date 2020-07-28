@@ -9,7 +9,7 @@ function AIscript() {
 		if (oGame.AIMadeScriptedMove) exit;  // bypass AI if AI made scripted move. Else on to AI.
 	}
 
-	var boardState = board_object.grid;
+	var boardState = oBoard.grid;
 	var capture = false;
 	var possibleMoves = ds_list_create();
 	var AIColor = global.HermioneColor;
@@ -17,7 +17,7 @@ function AIscript() {
 
 	possibleMoves = possibleMoves_scr(boardState, AISeat, AIColor, true, true);  // generate ds_list of possible moves
 	possibleMoves = avoidCheck_scr(possibleMoves, AIColor, AISeat, boardState);   // prune them for check outside possMoves?
-	// maybe move this to inside possMoves?
+
 
 	var numberOfMoves = floor((ds_list_size(possibleMoves) / 4));
 	if (numberOfMoves == 0)   // Check for stalemate/checkmate eventually. For now, revert to player. 
@@ -38,19 +38,19 @@ function AIscript() {
 	// check for castling double-move; special case; right side first
 	if (newY == 0) && (newX - xx == 2) 
 	{
-		var chosenPiece = board_object.grid[xx, yy]; 
+		var chosenPiece = oBoard.grid[xx][yy]; 
 		if (chosenPiece[0] == KING) 
 		{
 			if (AIColor == BLACK)  // Kingside, to right
 			{
 				ds_list_add(oGame.formattedHistory,"O-O");
 				show_debug_message("0-0");
-				board_object.grid[4, 0] = [0, 0];
-				board_object.grid[7, 0] = [0, 0];
-				board_object.grid[6, 0] = [KING, AIColor];
-				board_object.grid[5, 0] = [ROOK, AIColor];
-				board_object.NorthCanCastleLeft = false;
-				board_object.NorthCanCastleRight = false;
+				oBoard.grid[4][0] = 0;
+				oBoard.grid[7][0] = 0;
+				oBoard.grid[6, 0] = [KING, AIColor];
+				oBoard.grid[5, 0] = [ROOK, AIColor];
+				oBoard.NorthCanCastleLeft = false;
+				oBoard.NorthCanCastleRight = false;
 				oGame.turn += 1;
 				oGame.state = "Player Turn";
 				exit;
@@ -59,12 +59,12 @@ function AIscript() {
 				{
 					ds_list_add(oGame.formattedHistory,"O-O-0");
 					show_debug_message("0-0-0");
-					board_object.grid[xx, 0] = [0, 0];  // King on xx==3, not 4
-					board_object.grid[7, 0] = [0, 0];
-					board_object.grid[xx + 2, 0] = [KING, AIColor];
-					board_object.grid[xx + 1, 0] = [ROOK, AIColor];
-					board_object.NorthCanCastleLeft = false;
-					board_object.NorthCanCastleRight = false;
+					oBoard.grid[xx, 0] = [0, 0];  // King on xx==3, not 4
+					oBoard.grid[7, 0] = [0, 0];
+					oBoard.grid[xx + 2, 0] = [KING, AIColor];
+					oBoard.grid[xx + 1, 0] = [ROOK, AIColor];
+					oBoard.NorthCanCastleLeft = false;
+					oBoard.NorthCanCastleRight = false;
 					oGame.turn += 1;
 					oGame.state = "Player Turn";
 					exit;
@@ -74,19 +74,19 @@ function AIscript() {
 
 	if (newY == 0) && (xx - newX == 2)   // Instead castling left side 
 	{
-		var chosenPiece = board_object.grid[xx, yy];
+		var chosenPiece = oBoard.grid[xx, yy];
 		if (chosenPiece[0] == KING)
 		{
 			if (AIColor == BLACK)
 			{
 				ds_list_add(oGame.formattedHistory,"O-O-0");  // Queenside, king started on x==4
 				show_debug_message("0-0-0");
-				board_object.grid[0, 0] = [0, 0];
-				board_object.grid[xx, 0] = [0, 0];
-				board_object.grid[xx - 2, 0] = [KING, AIColor];
-				board_object.grid[xx - 1, 0] = [ROOK, AIColor];
-				board_object.NorthCanCastleLeft = false;
-				board_object.NorthCanCastleRight = false;
+				oBoard.grid[0, 0] = [0, 0];
+				oBoard.grid[xx, 0] = [0, 0];
+				oBoard.grid[xx - 2, 0] = [KING, AIColor];
+				oBoard.grid[xx - 1, 0] = [ROOK, AIColor];
+				oBoard.NorthCanCastleLeft = false;
+				oBoard.NorthCanCastleRight = false;
 				oGame.turn += 1;
 				oGame.state = "Player Turn";
 				exit;
@@ -96,12 +96,12 @@ function AIscript() {
 			{
 				ds_list_add(oGame.formattedHistory,"O-O");  // Kingside, king started on x==4
 				show_debug_message("0-0");
-				board_object.grid[0, 0] = [0, 0];
-				board_object.grid[xx, 0] = [0, 0];
-				board_object.grid[xx - 2, 0] = [KING, AIColor];
-				board_object.grid[xx - 1, 0] = [ROOK, AIColor];
-				board_object.NorthCanCastleLeft = false;
-				board_object.NorthCanCastleRight = false;
+				oBoard.grid[0, 0] = [0, 0];
+				oBoard.grid[xx, 0] = [0, 0];
+				oBoard.grid[xx - 2, 0] = [KING, AIColor];
+				oBoard.grid[xx - 1, 0] = [ROOK, AIColor];
+				oBoard.NorthCanCastleLeft = false;
+				oBoard.NorthCanCastleRight = false;
 				oGame.turn += 1;
 				oGame.state = "Player Turn";
 				exit;
@@ -111,18 +111,18 @@ function AIscript() {
 	}
 	// ********** PERFORM THE MOVE! *****************
 
-	var chosenPiece = board_object.grid[xx, yy];
-	if !(array_equals(board_object.grid[newX, newY], [0, 0])) capture = true;
+	var chosenPiece = oBoard.grid[xx, yy];
+	if !(array_equals(oBoard.grid[newX, newY], [0, 0])) capture = true;
 	animate(chosenPiece, xx, yy, newX, newY);
 
 	// ******* post-move adjustments ***************
 
-	if (chosenPiece[0] == ROOK) && ( xx == 0 ) && ( yy == 0 ) board_object.NorthCanCastleLeft = false;
-	if (chosenPiece[0] == ROOK) && ( xx == 7 ) && ( yy == 0 ) board_object.NorthCanCastleRight = false;
+	if (chosenPiece[0] == ROOK) && ( xx == 0 ) && ( yy == 0 ) oBoard.NorthCanCastleLeft = false;
+	if (chosenPiece[0] == ROOK) && ( xx == 7 ) && ( yy == 0 ) oBoard.NorthCanCastleRight = false;
 	if (chosenPiece[0] == KING) && ( (abs(newX - xx)) == 1 ) 
 	{
-		board_object.NorthCanCastleLeft = false;
-		board_object.NorthCanCastleRight = false;
+		oBoard.NorthCanCastleLeft = false;
+		oBoard.NorthCanCastleRight = false;
 	}
 
 
