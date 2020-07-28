@@ -22,11 +22,7 @@ switch (oGame.state)
 }
 
 
-
-
 if keyboard_check_pressed(vk_escape) game_end();
-
-
 
 var newX = 0;
 var newY = 0;
@@ -36,9 +32,9 @@ var pieceType;
 var proposedState;
 var capture = false;
 var HermioneColor = global.HermioneColor;
-var PlayerColor = WHITE;
+var PlayerColor = COLOR.WHITE;
 
-if (HermioneColor == WHITE) PlayerColor = BLACK;
+if (HermioneColor == COLOR.WHITE) PlayerColor = COLOR.BLACK;
 
 if (!pickedUp) && (mouse_check_button_released(mb_left))  // pickup
 {

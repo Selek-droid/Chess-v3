@@ -74,6 +74,19 @@ enum BLACK_CASTLE
 	NOPE = 0,
 }
 
+enum EN_PASSANT
+{
+	P6 = 7, // if on column 8, switch will default to it. Saving space.
+	P5 = 6,
+	P4 = 5,
+	P3 = 4,
+	P2 = 3,
+	P1 = 2,
+	P0 = 1,
+	UNAVAILBLE = 0
+}
+
+
 
 //enum White	
 //{

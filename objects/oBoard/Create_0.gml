@@ -4,19 +4,17 @@ y = (room_height/2) - (BOARD_HEIGHT/2);
 GrangerColor = global.HermioneColor;
 animateSprite = false;
 spriteInMotion = false;
-// movingSprite = Black.Pawn;
-// movingPiece = Black.Pawn;
 oldX = 0;
 oldY = 0;
 newX = 0;
 newY = 0;
+gridX = 0;
+gridY = 0;
 spriteX = 0;
 spriteY = 0;
 deltaX = 0;
 deltaY = 0;
 loc = 0;
-// kingDoneCastling = true;  // prolly will delete castle-animate code?
-// displayCastling = false;
 
 // contents of squares: Piece, Color.
 
@@ -26,14 +24,14 @@ selectedPiece[1] = 0;
 selectedPiece[0] = 0;
 pickedUp = false;
 turnOver = false;
+
 SouthCanCastleLeft = true;
 SouthCanCastleRight = true;
 NorthCanCastleLeft = true;
 NorthCanCastleRight = true;
 
-
-gridX = 0;
-gridY = 0;
+CaptureTimer = 0;
+RepetitionTimer = 0;
 
 
 BlackRook = COLOR.BLACK | PIECE.ROOK;
@@ -49,170 +47,106 @@ WhiteKing = COLOR.WHITE | PIECE.KING;
 WhiteQueen = COLOR.WHITE | PIECE.QUEEN;
 WhitePawn = COLOR.WHITE | PIECE.PAWN;
 
-var xx;
-var yy;
-
 // Initialize and populate board.
 
-for (xx = 0; xx < 72; xx += 1;) map[xx] = 0;
-
-map[0] = COLOR.BLACK | PIECE.ROOK;
-map[1] = COLOR.BLACK | PIECE.KNIGHT;
-map[2] = BlackBishop;
-map[3] = BlackKing;
-map[4] = BlackQueen;
-map[5] = BlackBishop;
-map[6] = BlackKnight;
-map[7] = BlackRook;
-map[8] = BlackPawn;
-map[9] = BlackPawn;
-map[10] = BlackPawn;
-map[11] = BlackPawn;
-map[12] = BlackPawn;
-map[13] = BlackPawn;
-map[14] = BlackPawn;
-map[15] = BlackPawn;
-map[48] = WhitePawn;
-map[49] = WhitePawn;
-map[50] = WhitePawn;
-map[51] = WhitePawn;
-map[52] = WhitePawn;
-map[53] = WhitePawn;
-map[54] = WhitePawn;
-map[55] = WhitePawn;
-map[56] = WhiteRook;
-map[57] = WhiteKnight;
-map[58] = WhiteBishop;
-map[59] = WhiteQueen;
-map[60] = WhiteKing;
-map[61] = WhiteBishop;
-map[62] = WhiteKnight;
-map[63] = WhiteRook;
-map[64] = SOUTH;   // where is mover sitting
-map[65] = COLOR.WHITE;   // whose turn
-map[66] = WHITE_CASTLE.BOTH_WAYS;
-map[67] = BLACK_CASTLE.BOTH_WAYS; // add en passant; turns since capture/pawn move; repetition moves; 
-
-
-
-
-
-
-// -------- old code ----------------------
-
-if (global.HermioneColor == COLOR.BLACK) show_debug_message(string("AI is black"));
-if (global.HermioneColor == COLOR.WHITE) show_debug_message(string("AI is white"));
-
-for (xx = 0; xx < 8; xx += 1;)
-{
-	for (yy = 0; yy < 8; yy += 1;)
-	{
-		grid[xx][yy] = 0;  // initialize to zero
-	}
-}
+for (var xx = 0; xx < 72; xx += 1;) map[xx] = 0;
 
 if !(global.endgameSetup)
 {
 	if (global.HermioneColor == COLOR.BLACK)
 	{
-		for (xx = 0; xx < 8; xx += 1;)
-		{
-			grid[xx][1] = [PAWN, BLACK];
-		}
-
-		for (xx = 0; xx < 8; xx += 1;)
-		{
-			grid[xx][6] = [PAWN, WHITE];
-		}
-
-		grid[0][0] = [ROOK, BLACK];
-		grid[7][0] = [ROOK, BLACK];
-		grid[1][0] = [KNIGHT, BLACK];
-		grid[6][0] = [KNIGHT, BLACK];
-		grid[2][0] = [BISHOP, BLACK];
-		grid[5][0] = [BISHOP, BLACK];
-		grid[3][0] = [QUEEN, BLACK];
-		grid[4][0] = [KING, BLACK];
-
-		grid[0][7] = [ROOK, WHITE];
-		grid[7][7] = [ROOK, WHITE];
-		grid[1][7] = [KNIGHT, WHITE];
-		grid[6][7] = [KNIGHT, WHITE];
-		grid[2][7] = [BISHOP, WHITE];
-		grid[5][7] = [BISHOP, WHITE];
-		grid[3][7] = [QUEEN, WHITE];
-		grid[4][7] = [KING, WHITE];
-
+		map[0] = COLOR.BLACK | PIECE.ROOK;
+		map[1] = COLOR.BLACK | PIECE.KNIGHT;
+		map[2] = BlackBishop;
+		map[3] = BlackKing;
+		map[4] = BlackQueen;
+		map[5] = BlackBishop;
+		map[6] = BlackKnight;
+		map[7] = BlackRook;
+		map[8] = BlackPawn;
+		map[9] = BlackPawn;
+		map[10] = BlackPawn;
+		map[11] = BlackPawn;
+		map[12] = BlackPawn;
+		map[13] = BlackPawn;
+		map[14] = BlackPawn;
+		map[15] = BlackPawn;
+		map[48] = WhitePawn;
+		map[49] = WhitePawn;
+		map[50] = WhitePawn;
+		map[51] = WhitePawn;
+		map[52] = WhitePawn;
+		map[53] = WhitePawn;
+		map[54] = WhitePawn;
+		map[55] = WhitePawn;
+		map[56] = WhiteRook;
+		map[57] = WhiteKnight;
+		map[58] = WhiteBishop;
+		map[59] = WhiteQueen;
+		map[60] = WhiteKing;
+		map[61] = WhiteBishop;
+		map[62] = WhiteKnight;
+		map[63] = WhiteRook;
+		map[64] = SOUTH;   // where is mover sitting
+		map[65] = COLOR.WHITE;   // whose turn
+		map[66] = WHITE_CASTLE.BOTH_WAYS;
+		map[67] = BLACK_CASTLE.BOTH_WAYS; 
+		map[68] = CaptureTimer;   // For 50-move stalemnate
+		map[69] = RepetitionTimer;   // for stalemate
+		map[70] = EN_PASSANT.UNAVAILBLE;
 	}
 
 	else if global.HermioneColor == COLOR.WHITE
 	{
-	for (xx = 0; xx < 8; xx += 1;)
-		{
-			grid[xx][6] = [PAWN, BLACK];
-		}
-
-		for (xx = 0; xx < 8; xx += 1;)
-		{
-			grid[xx][1] = [PAWN, WHITE];
-		}
-
-		grid[0][7] = [ROOK, BLACK];
-		grid[7][7] = [ROOK, BLACK];
-		grid[1][7] = [KNIGHT, BLACK];
-		grid[6][7] = [KNIGHT, BLACK];
-		grid[2][7] = [BISHOP, BLACK];
-		grid[5][7] = [BISHOP, BLACK];
-		grid[4][7] = [QUEEN, BLACK];  // K and Q switched
-		grid[3][7] = [KING, BLACK];
-
-		grid[0][0] = [ROOK, WHITE];
-		grid[7][0] = [ROOK, WHITE];
-		grid[1][0] = [KNIGHT, WHITE];
-		grid[6][0] = [KNIGHT, WHITE];
-		grid[2][0] = [BISHOP, WHITE];
-		grid[5][0] = [BISHOP, WHITE];
-		grid[4][0] = [QUEEN, WHITE];  // K and Q switched
-		grid[3, 0] = [KING, WHITE];
-
+		map[0] = WhiteRook;
+		map[1] = WhiteKnight;
+		map[2] = WhiteBishop;
+		map[3] = WhiteKing;
+		map[4] = WhiteQueen;
+		map[5] = WhiteBishop;
+		map[6] = WhiteKnight;
+		map[7] = WhiteRook;
+		map[8] = WhitePawn;
+		map[9] = WhitePawn;
+		map[10] = WhitePawn;
+		map[11] = WhitePawn;
+		map[12] = WhitePawn;
+		map[13] = WhitePawn;
+		map[14] = WhitePawn;
+		map[15] = WhitePawn;
+		map[48] = BlackPawn;
+		map[49] = BlackPawn;
+		map[50] = BlackPawn;
+		map[51] = BlackPawn;
+		map[52] = BlackPawn;
+		map[53] = BlackPawn;
+		map[54] = BlackPawn;
+		map[55] = BlackPawn;
+		map[56] = BlackRook;
+		map[57] = BlackKnight;
+		map[58] = BlackBishop;
+		map[59] = BlackQueen;
+		map[60] = BlackKing;
+		map[61] = BlackBishop;
+		map[62] = BlackKnight;
+		map[63] = BlackRook;
+		map[64] = SOUTH;   // where is mover sitting
+		map[65] = COLOR.WHITE;   // whose turn
+		map[66] = WHITE_CASTLE.BOTH_WAYS;
+		map[67] = BLACK_CASTLE.BOTH_WAYS; 
+		map[68] = CaptureTimer;   // For 50-move stalemnate
+		map[69] = RepetitionTimer;   // for stalemate
+		map[70] = EN_PASSANT.UNAVAILBLE;
 	}
 }
 
 if global.endgameSetup
 {
 	global.HermioneColor = COLOR.BLACK;
-//	grid[7][1] = [PAWN, BLACK];
-//	grid[6][1] = [PAWN, BLACK];
-//	grid[5][1] = [PAWN, BLACK];
-//	grid[6][6] = White.Knight;
-//	grid[5][6] = COLOR.BLANC | TYPE.KNIGHT;
-	//grid[4][5] = [KING, WHITE];
-	//grid[1][1] = [PAWN, WHITE];
-	//grid[3][3] = [BISHOP, WHITE];
-//	grid[0][2] = [QUEEN, BLACK];
-//	grid[1][6] = [PAWN, WHITE];
-//	grid[2][2] = [ROOK, BLACK];
-//	grid[6][7] = [ROOK, WHITE];
-//	grid[6][6] = [ROOK, WHITE];
-
-//WhiteKnight = COLOR.BLANC | TYPE.KNIGHT ;
-//grid[1][1] = WhiteKnight;
-//ColorBlack = grid[5][6] & 8;
-
-
-//if !(grid[5][6] & 8)
-//{
-//	show_debug_message("Successfully tested color of knight");
-//}
-//else 
-//{
-//	show_debug_message("Didn't recog enum White");
-//}
-
-// if !(ColorBlack = grid[5][6] & 8;
-
-
-
+	map[3] = BlackKing;
+	map[11] = WhitePawn;
+	map[19] = WhiteKing;
+}
 	
 // Piece-square tables ============================================
 
@@ -1107,4 +1041,3 @@ HumanKingTable [1][0] = -30;
 HumanKingTable [0, 0] = -30;
 
 
-}
