@@ -11,7 +11,7 @@ if (animateSprite)
 	loc += 1;
 	if (loc > 19) 
 	{		
-		oBoard.map[newX][newY] = movingPiece;   // Sicilian defense		
+		map[newX] = movingPiece;   // Sicilian defense		
 		animateSprite = false;
 		spriteInMotion = false;
 		loc = 0;
@@ -22,7 +22,7 @@ var xx = 0;
 
 for (xx = 0; xx <= 63; xx += 1;)
 {
-	var drawnPiece = oBoard.map[xx];
+	var drawnPiece = map[xx];
 	switch drawnPiece
 	{
 		case WhitePawn:
@@ -121,4 +121,56 @@ for (xx = 0; xx <= 63; xx += 1;)
 			break;
 		}
 	}
+}
+
+if selectedPiece
+{
+	switch selectedPiece
+	{
+		case WhitePawn:
+		{
+			draw_sprite(white_pawn_sprite,-1,mouse_x - 32, mouse_y - 32);
+			break;
+		}
+		
+		case WhiteKnight:
+		{
+			draw_sprite(white_knight_sprite,-1,mouse_x - 32, mouse_y - 32);
+			break;
+		}
+		
+				
+	//else if array_equals( selectedPiece , [ROOK, WHITE]) 
+	//	draw_sprite(white_rook_sprite,-1,mouse_x - 32, mouse_y - 32);
+		 		
+	//else if array_equals( selectedPiece , [KNIGHT, WHITE]) 
+	//	draw_sprite(white_knight_sprite,-1,mouse_x - 32, mouse_y - 32);
+				
+	//else if array_equals( selectedPiece , [BISHOP, WHITE]) 
+	//	draw_sprite(white_bishop_sprite,-1,mouse_x - 32, mouse_y - 32);
+				
+	//else if array_equals( selectedPiece , [QUEEN, WHITE]) 
+	//	draw_sprite(white_queen_sprite,-1,mouse_x - 32, mouse_y - 32);
+				
+	//else if array_equals( selectedPiece , [KING, WHITE]) 
+	//	draw_sprite(white_king_sprite,-1,mouse_x - 32, mouse_y - 32);
+		
+	//else if array_equals( selectedPiece , [PAWN, BLACK]) 
+	//	draw_sprite(black_pawn_sprite,-1,mouse_x - 32, mouse_y - 32);
+		
+	//else if array_equals( selectedPiece , [ROOK, BLACK]) 
+	//	draw_sprite(black_rook_sprite,-1,mouse_x - 32, mouse_y - 32);
+		
+	//else if array_equals( selectedPiece , [KNIGHT, BLACK]) 
+	//	draw_sprite(black_knight_sprite,-1,mouse_x - 32, mouse_y - 32);
+		
+	//else if array_equals( selectedPiece , [BISHOP, BLACK]) 
+	//	draw_sprite(black_bishop_sprite,-1,mouse_x - 32, mouse_y - 32);
+		
+	//else if array_equals( selectedPiece , [QUEEN, BLACK]) 
+	//	draw_sprite(black_queen_sprite,-1,mouse_x - 32, mouse_y - 32);
+		
+	//else if array_equals( selectedPiece , [KING, BLACK]) 
+	//	draw_sprite(black_king_sprite,-1,mouse_x - 32, mouse_y - 32);
+}
 }

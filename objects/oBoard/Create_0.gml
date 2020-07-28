@@ -1,15 +1,22 @@
+#region Declarations
+
 x = (room_width/2) - (BOARD_WIDTH/2);
 y = (room_height/2) - (BOARD_HEIGHT/2);
 
 GrangerColor = global.HermioneColor;
+
+selectedPiece = 0;
+pickedUp = false;
+oldIndex = 0;
+newIndex = 0;
+capture = false;
+
 animateSprite = false;
 spriteInMotion = false;
-oldX = 0;
-oldY = 0;
-newX = 0;
-newY = 0;
-gridX = 0;
-gridY = 0;
+
+
+
+
 spriteX = 0;
 spriteY = 0;
 deltaX = 0;
@@ -20,10 +27,6 @@ loc = 0;
 
 contents[1] = 0;
 contents[0] = 0;
-selectedPiece[1] = 0;
-selectedPiece[0] = 0;
-pickedUp = false;
-turnOver = false;
 
 SouthCanCastleLeft = true;
 SouthCanCastleRight = true;
@@ -46,6 +49,8 @@ WhiteBishop = COLOR.WHITE | PIECE.BISHOP;
 WhiteKing = COLOR.WHITE | PIECE.KING;
 WhiteQueen = COLOR.WHITE | PIECE.QUEEN;
 WhitePawn = COLOR.WHITE | PIECE.PAWN;
+
+#endregion
 
 // Initialize and populate board.
 
@@ -150,32 +155,32 @@ if global.endgameSetup
 	
 // Piece-square tables ============================================
 
-AIpawnTable [7][7] = 1000;  // AI back rank; pawns never here until promoted
-AIpawnTable [6][7] = 1000;
-AIpawnTable [5][7] = 1000;
-AIpawnTable [4][7] = 1000;
-AIpawnTable [3][7] = 1000;
-AIpawnTable [2][7] = 1000;
-AIpawnTable [1][7] = 1000;
-AIpawnTable [0][7] = 1000;
+AIpawnTable [63] = 1000;  // AI back rank; pawns never here until promoted
+AIpawnTable [62] = 1000;
+AIpawnTable [61] = 1000;
+AIpawnTable [60] = 1000;
+AIpawnTable [59] = 1000;
+AIpawnTable [58] = 1000;
+AIpawnTable [57] = 1000;
+AIpawnTable [56] = 1000;
 
-AIpawnTable [7][6] = 50;  // AI on verge of promotion
-AIpawnTable [6][6] = 50;
-AIpawnTable [5][6] = 50;
-AIpawnTable [4][6] = 50;
-AIpawnTable [3][6] = 50;
-AIpawnTable [2][6] = 50;
-AIpawnTable [1][6] = 50;
-AIpawnTable [0][6] = 50;
+AIpawnTable [55] = 50;  // AI on verge of promotion
+AIpawnTable [54] = 50;
+AIpawnTable [53] = 50;
+AIpawnTable [52] = 50;
+AIpawnTable [51] = 50;
+AIpawnTable [50] = 50;
+AIpawnTable [49] = 50;
+AIpawnTable [48] = 50;
 
-AIpawnTable [7][5] = 10;  // AI control center][player's side of board 
-AIpawnTable [6][5] = 10;
-AIpawnTable [5][5] = 20;
-AIpawnTable [4][5] = 30;
-AIpawnTable [3][5] = 30;
-AIpawnTable [2][5] = 20;
-AIpawnTable [1][5] = 10;
-AIpawnTable [0][5] = 10;
+AIpawnTable [47] = 10;  // AI control center][player's side of board 
+AIpawnTable [46] = 10;
+AIpawnTable [45] = 20;
+AIpawnTable [44] = 30;
+AIpawnTable [43] = 30;
+AIpawnTable [42] = 20;
+AIpawnTable [41] = 10;
+AIpawnTable [40] = 10;
 
 AIpawnTable [7][4] = 5;  // AI control center][player side of board 
 AIpawnTable [6][4] = 5;
